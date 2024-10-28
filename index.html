@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Floating Hearts Background</title>
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+    <title>I Have Somethings</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,17 +13,17 @@
         }
 
         body {
-            margin: 0;
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
             background: #1a1a1a;
-            overflow-x: hidden;
+            color: white;
+            height: 100vh; /* Menggunakan height tetap */
+            width: 100vw;
+            overflow: hidden; /* Mencegah scrolling */
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: Arial, sans-serif;
-            cursor: pointer;
-            padding: 20px;
-            position: relative;
+            position: fixed; /* Membuat posisi tetap */
+            touch-action: manipulation; /* Mengoptimalkan touch events */
         }
 
         .container {
@@ -70,23 +71,19 @@
             position: fixed;
             top: 10px;
             right: 10px;
-            z-index: 1000;
             background: rgba(255, 255, 255, 0.2);
             border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
+            width: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
+            font-size: 18px;
             color: white;
+            border-radius: -100%; /* Membuat elemen menjadi lingkaran */
             transition: all 0.3s ease;
         }
 
         button {
-            padding: 10px 20px;
             font-size: clamp(14px, 3.5vw, 16px);
             cursor: pointer;
             background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
@@ -136,26 +133,52 @@
             transition: opacity  0.5s ease-in-out, transform 1.5s ease-out;
         }
 
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
+        @media (max-width: 768px) {
             .music-button {
                 width: 35px;
                 height: 35px;
                 font-size: 18px;
             }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
 
             button {
                 padding: 8px 16px;
-                margin: 5px;
+                min-width: 100px;
+            }
+
+            textarea {
+                min-height: 100px;
             }
         }
 
+        /* Menangani orientasi landscape di mobile */
         @media (max-height: 500px) and (orientation: landscape) {
             .container {
+                padding: 10px;
                 margin: 60px auto;
+            }
+
+            h1 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+
+            textarea {
+                min-height: 80px;
+            }
+
+            .button-container {
+                margin: 10px 0;
             }
         }
 
@@ -323,14 +346,15 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Tambahkan tombol musik -->
-        <button id="musicButton" class="music-button">🎵</button>
+    <!-- Tambahkan tombol musik -->
+    <button id="musicButton" class="music-button">🎵</button>
 
-        <!-- Tambahkan audio -->
-        <audio id="backgroundMusic" loop>
-            <source src="backsound/Cry-Cigarettes_After_Sex.mp3" type="audio/mpeg">
-        </audio>
+    <!-- Tambahkan audio -->
+    <audio id="backgroundMusic" loop>
+        <source src="backsound/Cry-Cigarettes_After_Sex.mp3" type="audio/mpeg">
+    </audio>
+    <div class="container">
+        
         <h1 id="title">Hallo Echy</h1>
         <p id="message">Boleh minta waktunya sebentar?</p>
         <textarea id="userInput" placeholder="Tulis pesan kamu yaa..." style="display: none;"></textarea>
