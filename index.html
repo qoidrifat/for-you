@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Hearts Background</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #1a1a1a;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            padding: 10px;
+            border-radius: 10px;
+            white-space: pre-wrap; /* Memastikan teks panjang terputus */
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        textarea {
+            width: 90%;
+            min-height: 150px;
+            padding: 15px;
+            margin: 20px auto;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            resize: vertical;
+            display: none;
+            font-family: Arial, sans-serif;
+        }
+
+        .music-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .music-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: rgba(255, 107, 107, 0.5);
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .heart {
+            position: absolute;
+            animation: float-heart linear infinite;
+            color: rgba(255, 105, 180, 0.7);
+            pointer-events: none;
+        }
+
+        .click-heart {
+            position: absolute;
+            pointer-events: none;
+            animation: click-animation 1.5s ease-out forwards;
+        }
+
+        @keyframes float-heart {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes click-animation {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 10px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+ rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: all 0.5s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(45deg, #ff8e8e, #ff6b6b);
+        }
+
+        button:hover:before {
+            left: 100%;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Style khusus untuk Save button */
+        #saveButton {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        #saveButton:hover {
+            background: linear-gradient(45deg, #45a049, #4CAF50);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Tambahan animasi untuk button */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+            }
+        }
+
+        /* Style untuk container button */
+        .button-container {
+            margin: 15px 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Efek disabled button */
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Efek focus button */
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+        }
+
+        .click-image {
+            position: absolute;
+            pointer-events: none;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 1.5s ease-out;
+        }
+
+        @keyframes rotate-fade-out {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Tambahkan tombol musik -->
+        <button id="musicButton" class="music-button">🎵</button>
+
+        <!-- Tambahkan audio -->
+        <audio id="backgroundMusic" loop>
+            <source src="backsound/Cry-Cigarettes_After_Sex.mp3" type="audio/mpeg">
+        </audio>
+        <h1 id="title">Hallo Echy</h1>
+        <p id="message">Boleh minta waktunya sebentar?</p>
+        <textarea id="userInput" placeholder="Tulis pesan kamu yaa..." style="display: none;"></textarea>
+        <div class="button-container">
+            <button id="nextButton">Next</button>
+            <button id="saveButton" style="display: none;">Save</button>
+        </div>
+    </div>
+
+    <script>
+        // Tambahkan script ini
+        const musicButton = document.getElementById('musicButton');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        let isMusicPlaying = false;
+
+        musicButton.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                musicButton.textContent = '🎵';
+            } else {
+                backgroundMusic.play();
+                musicButton.textContent = '⏸️';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        // Memulai musik saat interaksi pertama dengan halaman
+        document.addEventListener('click', function initMusic() {
+            backgroundMusic.play();
+            isMusicPlaying = true;
+            musicButton.textContent = '⏸️';
+            // Hapus event listener setelah musik dimulai
+            document.removeEventListener('click', initMusic);
+        }, { once: true });
+
+        // Set volume musik
+        backgroundMusic.volume = 0.3; // Sesuaikan volume (0.0 - 1.0)
+
+        const heartSymbols = ['💗'];
+        const messages = [
+            { title: "Hallo Echy", message: "Boleh minta waktunya sebentar?" },
+            { title: "", message: "" },
+            { title: "", message: "Sebelumnya maaf yaa tiba-tiba ngechat lagi" },
+            { title: "", message: "" },
+            { title: "", message: "Aku mau minta bantuan kamu boleh? Ini perihal ada apa dan mengapa ada kejadian seperti ini." },
+            { title: "", message: "" },
+            { title: "", message: "Aku minta tolong bangetttt chyy, bolee yaaa? Hehehe." },
+            { title: "", message: "" },
+            { title: "", message: "Maaf kalo egoiss, bakalan aku jadiin noted buat kedepannya. Maaf banget kali ini ngerepotin kamuunya." },
+            { title: "", message: "" },
+            { title: "", message: "Ini sedikit yang aku pahami tentang diri aku, aku tu orangnya ngebosenin, ga pinter cari topik, gabisa mencairkan suasana, ga humoris, atau ada yang lain? Bisa kamu tambahin atau dikoreksi kok." },
+            { title: "", message: "" },
+            { title: "", message: "Kamu boleh banget terus-terang atau blak-blakan aja ngejelasinnya, bakal aku terima semuanya apapun itu." },
+            { title: "", message: "" },
+            { title: "", message: "Kamu ga perlu khawatir takut nyakitin hati aku atau apalah itu, just explain what you think about me." },
+            { title: "", message: "" },
+            { title: "", message: "Dan aku mau minta maaf bangett udah nguras banyak energi sama tenaga kamu selama ini, kamu pasti merasa tersiksa kan? I'm so sorry." },
+            { title: "", message: "" },
+            { title: "", message: "Terakhir nih." },
+            { title: "", message: "" },
+            { title: "", message: "Makasih banget loh udah mau kenal sama cowo kaya aku." },
+            { title: "", message: "" },
+            { title: "", message: "Udah mau luangin waktu kamu. " },
+            { title: "", message: "" },
+            { title: "", message: "Makasih udah mau kenal pribadiku yang ga semua orang tau." },
+            { title: "", message: "" },
+            { title: "", message: "Makasih udah pernah singgah di hati cowo seperti aku." },
+            { title: "", message: "" },
+            { title: "", message: "Btw aku ngerasa kita tu punya beberapa kesamaan loh, salah satu contohnya dalam hal keluarga." },
+            { title: "", message: "" },
+            { title: "", message: "FYI aja, ayahku gaada pas aku masi sd kelas 6 akhir. " },
+            { title: "", message: "" },
+            { title: "", message: "Gaada dalam artian pisah/cerai, dan aku satu-satunya anak laki-laki setelah abangku meninggal beberapa bulan sebelum cerai" },
+            { title: "", message: "" },
+            { title: "", message: "Aku gaminta kamu buat ngerasa kasian atau gimanaa, aku cuma pengen kamu tau aja." },
+            { title: "", message: "" },
+            { title: "", message: "Maaff yaa kalo yang barusan kurang nyambung. " },
+            { title: "", message: "" },
+            { title: "", message: "Maaff kalo selama ini aku banyak ngelakuin salah ke kamu, baik salah yang disengaja ataupun ga disengaja." },
+            { title: "", message: "" },
+            { title: "", message: "Kalo dunia lagi jahat sama kamu dan gaada seorangpun yang mau dengerin keluh kesah kamu. " },
+            { title: "", message: "" },
+            { title: "", message: "Kamu bisa ceritain apapun itu ke aku kok (itupun kalo kamu mau)." },
+            { title: "", message: "" },
+            { title: "", message: "Sehat-sehat yaa kedepannya, selamat melanjutkan perjalananmu wanita baik ☺" },
+            { title: "", message: "" },
+            { title: "Terakhir", message: "Tinggalkan pesannya disini:" }
+        ];
+        let currentMessageIndex = 0;
+        let userInput = document.getElementById('userInput');
+        let nextButton = document.getElementById('nextButton');
+        let saveButton = document.getElementById('saveButton');
+        let titleElement = document.getElementById('title');
+        let messageElement = document.getElementById('message');
+
+        nextButton.addEventListener('click', () => {
+            if (currentMessageIndex < messages.length - 1) {
+                currentMessageIndex++;
+                updateMessage();
+            }
+        });
+
+        function updateMessage() {
+            titleElement.textContent = messages[currentMessageIndex].title;
+            messageElement.textContent = messages[currentMessageIndex].message;
+            
+            if (currentMessageIndex === messages.length - 1) {
+                nextButton.style.display = 'none';
+                userInput.style.display = 'block';
+                saveButton.style.display = 'inline-block';
+            }
+        }
+
+        saveButton.addEventListener('click', () => {
+            const userInputValue = userInput.value.trim();
+            if (userInputValue !== '') {
+                const fullMessage = messages.map(msg => `${msg.title}\n${msg.message}`).join('\n\n');
+                const finalMessage = `${fullMessage}\n\n${userInputValue}`;
+                const blob = new Blob([finalMessage], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'pesan.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+
+                // Menampilkan pop-up notifikasi
+                alert('Pesan kamu telah tersimpan!');
+
+                // Mengosongkan textarea setelah menyimpan
+                userInput.value = '';
+            } else {
+                alert('Silakan tulis pesan terlebih dahulu sebelum menyimpan.');
+            }
+        });
+
+        document.getElementById('nextButton').addEventListener('click', () => {
+            currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+            updateMessage();
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 60 + 40;
+            heart.style.fontSize = size + 'px';
+            const animationDuration = Math.random() * 4 + 2;
+            heart.style.animationDuration = animationDuration + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, animationDuration * 1000);
+        }
+
+        function createClickHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'click-heart';
+            heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+            const size = Math.random() * 30 + 20;
+            heart.style.fontSize = `${size}px`;
+            heart.style.color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.7)`;
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 1500);
+        }
+
+        const images = ['images/echy1.jpg', 'images/echy2.jpg', 'images/echy3.jpg', 'images/echy4.jpg', 'images/echy5.jpg', 'images/echy6.jpg', 'images/echy7.jpg', 'images/echy8.jpg', 'images/echy9.jpg', 'images/echy10.jpg', 'images/echy11.jpg', 'images/echy12.jpg'];
+        let currentImageIndex = 0;
+
+        function createClickImage(x, y) {
+            const img = document.createElement('img');
+            img.className = 'click-image';
+            img.src = images[currentImageIndex];
+            img.style.left = `${x - 50}px`;
+            img.style.top = `${y - 50}px`;
+            document.body.appendChild(img);
+            
+            // Trigger reflow
+            img.offsetWidth;
+
+            // Start fade in
+            img.style.opacity = '1';
+            
+            setTimeout(() => {
+                // Start rotate and fade out animation
+                img.style.animation = 'rotate-fade-out 1s ease-out forwards';
+            }, 1000);
+
+            setTimeout(() => {
+                img.remove();
+            }, 2000);
+
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+        }
+
+        function createClickBurst(x, y) {
+            createClickImage(x, y);
+        }
+
+
+        document.addEventListener('click', (e) => {
+            if (e.target.id !== 'nextButton' && e.target.id !== 'saveButton' && e.target.id !== 'userInput') {
+                createClickBurst(e.clientX, e.clientY);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.id !== 'nextButton') {
+                createClickBurst(e.clientX, e.clientY);
+            }
+        });
+
+        setInterval(() => {
+            for (let i = 0; i < 3; i++) {
+                createHeart();
+            }
+        }, 200);
+
+        for(let i = 0; i < 30; i++) {
+            createHeart();
+        }
+    </script>
+</body>
+</html>
