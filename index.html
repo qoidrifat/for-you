@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Floating Hearts Background</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             background: #1a1a1a;
-            overflow: hidden;
+            overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: Arial, sans-serif;
             cursor: pointer;
+            padding: 20px;
+            position: relative;
         }
 
         .container {
@@ -22,58 +30,185 @@
             z-index: 2;
             text-align: center;
             color: white;
-            max-width: 800px;
-            margin: 20px;
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            margin: auto;
         }
 
         h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: clamp(20px, 5vw, 24px);
+            margin-bottom: 15px;
             color: #ff6b6b;
         }
 
         p {
-            font-size: 18px;
+            font-size: clamp(16px, 4vw, 18px);
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             padding: 10px;
             border-radius: 10px;
-            white-space: pre-wrap; /* Memastikan teks panjang terputus */
+            white-space: pre-wrap;
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
         }
 
         textarea {
-            width: 90%;
-            min-height: 150px;
-            padding: 15px;
-            margin: 20px auto;
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            margin: 15px auto;
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            font-size: 16px;
+            font-size: clamp(14px, 3.5vw, 16px);
             resize: vertical;
             display: none;
-            font-family: Arial, sans-serif;
         }
 
         .music-button {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
             z-index: 1000;
             background: rgba(255, 255, 255, 0.2);
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
+            font-size: 20px;
             color: white;
             transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .music-button {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: clamp(14px, 3.5vw, 16px);
+            cursor: pointer;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            margin: 8px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            width: auto;
+            min-width: 120px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .heart {
+            position: fixed;
+            animation: float-heart linear infinite;
+            color: rgba(255, 105, 180, 0.7);
+            pointer-events: none;
+            font-size: clamp(20px, 5vw, 40px);
+        }
+
+        .click-heart {
+            position: fixed;
+            pointer-events: none;
+            animation: click-animation 1.5s ease-out forwards;
+            font-size: clamp(16px, 4vw, 30px);
+        }
+
+        .click-image {
+            position: fixed;
+            pointer-events: none;
+            width: clamp(60px, 15vw, 100px);
+            height: clamp(60px, 15vw, 100px);
+            object-fit: cover;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 1.5s ease-out;
+        }
+
+        @keyframes float-heart {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes click-animation {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            button {
+                padding: 8px 16px;
+                min-width: 100px;
+            }
+
+            textarea {
+                min-height: 100px;
+            }
+        }
+
+        /* Menangani orientasi landscape di mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                padding: 10px;
+                margin: 60px auto;
+            }
+
+            h1 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+
+            textarea {
+                min-height: 80px;
+            }
+
+            .button-container {
+                margin: 10px 0;
+            }
         }
 
         .music-button:hover {
@@ -285,6 +420,20 @@
 
         // Set volume musik
         backgroundMusic.volume = 0.3; // Sesuaikan volume (0.0 - 1.0)
+
+        // Tambahan untuk handling mobile touch events
+        document.addEventListener('touchstart', (e) => {
+            if (!e.target.closest('button') && !e.target.closest('textarea')) {
+                const touch = e.touches[0];
+                createClickBurst(touch.clientX, touch.clientY);
+            }
+        });
+
+        // Prevent zoom on double tap (iOS)
+        document.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.target.click();
+        });
 
         const heartSymbols = ['💗'];
         const messages = [
